@@ -1,0 +1,72 @@
+//Define all the pins for sensors and motors
+int sensorRight=2;
+int sensorLeft=3;
+int motorRight1=4;
+int motorRight2=5;
+int motorLeft1=6;
+int motorLeft2=7;
+
+void setup() {
+  // Set the baud rate for serial communication
+Serial.begin(9600);
+
+//Set ir sensor pin as INPUT
+pinMode(sensorLeft,INPUT);
+pinMode(sensorRight,INPUT);
+//Set motor pins as OUTPUT
+pinMode(motorLeft1,OUTPUT);
+pinMode(motorLeft2,OUTPUT);
+pinMode(motorRight1,OUTPUT);
+pinMode(motorRight2,OUTPUT);
+
+//Set all the pin to HIGH by default
+digitalWrite(motorLeft1,HIGH);
+digitalWrite(motorLeft2,HIGH);
+digitalWrite(motorRight1,HIGH);
+digitalWrite(motorRight2,HIGH);
+
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+int leftSensorData=digitalRead(sensorLeft);
+int rightSensorData=digitalRead(sensorRight);
+Serial.print("SensorLeft:");
+Serial.println(leftSensorData);
+Serial.print("SensorRight:");
+Serial.println(rightSensorData);
+
+if((rightSensorData==HIGH)&&(leftSensorData==HIGH))//To move forward
+{
+  digitalWrite(motorRight1,LOW);
+  digitalWrite(motorRight2,HIGH);
+  digitalWrite(motorLeft1,HIGH);
+  digitalWrite(motorLeft2,LOW);
+
+}
+
+else if((rightSensorData==HIGH)&&(leftSensorData==LOW))// To move left
+{
+  digitalWrite(motorRight1,LOW);
+  digitalWrite(motorRight2,HIGH);
+  digitalWrite(motorLeft1,HIGH);
+  digitalWrite(motorLeft2,HIGH);
+}
+
+else if((rightSensorData==LOW)&&(leftSensorData==HIGH))// To move right
+{
+  digitalWrite(motorRight1,HIGH);
+  digitalWrite(motorRight2,HIGH);
+  digitalWrite(motorLeft1,HIGH);
+  digitalWrite(motorLeft2,LOW);
+}
+
+else if((rightSensorData==LOW)&&(leftSensorData==LOW)) // To stop the robot
+{
+  digitalWrite(motorRight1,HIGH);
+  digitalWrite(motorRight2,HIGH);
+  digitalWrite(motorLeft1,HIGH);
+  digitalWrite(motorLeft2,HIGH);
+}
+
+}
